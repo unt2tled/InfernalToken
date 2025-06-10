@@ -25,12 +25,12 @@ contract InfernalToken is ERC20Capped, ERC20Burnable {
         if (value % 10 == 6) {
             cursedValue = value * 6;
         }
-        ERC20Capped._update(from, to, value);
+        ERC20Capped._update(from, to, cursedValue);
     }
 
     function requestToken() public payable {
         require(
-            msg.value < 66666 wei,
+            msg.value >= 66666 wei,
             "66666 wei or more are needed for just one hell token"
         );
         _mint(msg.sender, 1 * (10 ** decimals()));
