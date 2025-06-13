@@ -8,7 +8,8 @@
   "main": "index.js",
   "scripts": {
     "compile": "npx hardhat compile",
-    "deploy:test": "npx hardhat ignition deploy ./ignition/modules/Token.js --network sepolia",
+    "deploy:test": "npx hardhat ignition deploy ./ignition/modules/InfernalToken.js --network sepolia",
+    "reset:test": "npx hardhat ignition:reset --network sepolia",
     "test": "npx hardhat test",
     "prettier": "npx prettier --write --plugin=prettier-plugin-solidity 'contracts/**/*.sol'"
   },

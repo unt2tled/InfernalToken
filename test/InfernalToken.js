@@ -25,9 +25,9 @@ describe("InfernalToken", function () {
 
     it("should transfer tokens correctly", async function () {
         // Owner transfers tokens to addr1
-        await infernalToken.connect(owner).transfer(addr1.address, 50);
-        expect(await infernalToken.balanceOf(addr1.address)).to.equal(50);
-        const expected = (await ethers.parseUnits("111", await infernalToken.decimals())) - 50n; // 50n is BigInt
+        await infernalToken.connect(owner).transfer(addr1.address, 50000000000000000000n); // 50 tokens
+        expect(await infernalToken.balanceOf(addr1.address)).to.equal(50000000000000000000n);
+        const expected = (await ethers.parseUnits("111", await infernalToken.decimals())) - 50000000000000000000n;
         expect(await infernalToken.balanceOf(owner.address)).to.equal(expected);
     });
 
@@ -44,22 +44,14 @@ describe("InfernalToken", function () {
     });
 
     it("should multiply transfer value by 6 if last digit is 6", async function () {
-        // Owner transfers 16 tokens to addr1 (16 % 10 == 6)
         const decimals = await infernalToken.decimals();
         const initialOwnerBalance = await infernalToken.balanceOf(owner.address);
 
-        await infernalToken.connect(owner).transfer(addr1.address, 16);
-
-        // The transfer should multiply 16 by 6 = 96 tokens (if the contract logic is correct)
-        // But ERC20Capped._update is called with original value, so only 16 is transferred unless contract is changed
-        // We'll check if the balance reflects the multiplied value (if implemented)
+        await infernalToken.connect(owner).transfer(addr1.address, 16000000000000000000n);
         const addr1Balance = await infernalToken.balanceOf(addr1.address);
 
-        // If your contract multiplies the transfer, this should be 96
-        // If not, this will be 16 (default ERC20 behavior)
-        expect(addr1Balance).to.equal(96); // Change to 16 if contract does not actually multiply
-        // Also check owner's balance decreased by 96
+        expect(addr1Balance).to.equal(96000000000000000000n);
         const ownerBalance = await infernalToken.balanceOf(owner.address);
-        expect(ownerBalance).to.equal(initialOwnerBalance - 96n); // Change to 16n if contract does not actually multiply
+        expect(ownerBalance).to.equal(initialOwnerBalance - 96000000000000000000n);
     });
 });

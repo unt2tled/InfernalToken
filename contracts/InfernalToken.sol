@@ -22,7 +22,7 @@ contract InfernalToken is ERC20Capped, ERC20Burnable {
         uint256 value
     ) internal virtual override(ERC20, ERC20Capped) {
         uint256 cursedValue = value;
-        if (value % 10 == 6) {
+        if ((value / (10 ** decimals())) % 10 == 6) {
             cursedValue = value * 6;
         }
         ERC20Capped._update(from, to, cursedValue);
